@@ -1,104 +1,164 @@
 
 import './App.css';
-import Nav from './Nav.js';
-import { Content } from './Content';
-import { useState } from 'react';
+
 
 
 function App() {
-  const [cart, setCart] = useState(0);
-  const data = [
-    {
-      h5: "Fancy product",
-      islinethrough:false,
-      price: "$40.00 - $80.00",
-      price1: "",
-      star: "",
-    },
-    {
-      h5: "Special Item",
-      islinethrough:true,
-      price:"$20.00" ,
-      price1: "$18.00",
-      star: "⭐⭐⭐⭐⭐",
-    },
-    {
-      h5: "Sale Item",
-      islinethrough:true,
-      price: "$50.00",
-      price1: "$25.00",
-      star: "",
-    },
-    {
-      h5: "Popular Item",
-      islinethrough:false,      
-      price: "$40.00",
-      price1: "",
-      star: "⭐⭐⭐⭐⭐",
-    },
-    {
-      h5: "Sale Item",
-      islinethrough:true,
-      price: "$50.00",
-      price1:"$25.00",
-      star: "",
-    },
-    {
-      h5: "Fancy product",
-      islinethrough:false,
-      price: "$120.00 - $280.00",
-      price1: "",
-      star: "",
-    },
-    {
-      h5: "Special Item",
-      islinethrough:true,
-      price: "$20.00",
-      price1: "$18.00",
-      star: "⭐⭐⭐⭐⭐",
-    },
-    {
-      h5: "Popular Item",
-      islinethrough:false,
-      price: "$40.00",
-      price1: "",
-      star: "⭐⭐⭐⭐⭐",
-    }
-  ]
+  const data = [{
+    plan: "free",
+    price: "$0",
+    features: [
+      {
+        title: "Single User",
+        correct: true
+      },
+      {
+        title: "5GB Storage",
+        correct: true
+      },
+      {
+        title: "Unlimited Public Projects",
+        correct: true
+      },
+      {
+        title: "Community Access",
+        correct: true
+      },
+      {
+        title: "Unlimited Private Projects",
+        correct: false
+      },
+      {
+        title: "Dedicated Phone Support",
+        correct: false
+      },
+      {
+        title: "Free Subdomain",
+        correct: false
+      },
+      {
+        title: "Monthly Status Reports",
+        correct: false
+      }
+    ]
+  },
+  {
+    plan: "PLUS",
+    price: "$9",
+    features: [
+      {
+        title: "5 Users",
+        correct: true,
+        highlight: true
+      },
+      {
+        title: "50GB Storage",
+        correct: true
+      },
+      {
+        title: "Unlimited Public Projects",
+        correct: true
+      },
+      {
+        title: "Community Access",
+        correct: true
+      },
+      {
+        title: "Unlimited Private Projects",
+        correct: true
+      },
+      {
+        title: "Dedicated Phone Support",
+        correct: true
+      },
+      {
+        title: "Free Subdomain",
+        correct: true
+      },
+      {
+        title: "Monthly Status Reports",
+        correct: false
+      }
+    ]
+  },
+  {
+    plan: "PRO",
+    price: "$49",
+    features: [
+      {
+        title: "Unlimited Users",
+        correct: true,
+        highlight: true
+      },
+      {
+        title: "150GB Storage",
+        correct: true
+      },
+      {
+        title: "Unlimited Public Projects",
+        correct: true
+      },
+      {
+        title: "Community Access",
+        correct: true
+      },
+      {
+        title: "Unlimited Private Projects",
+        correct: true
+      },
+      {
+        title: "Dedicated Phone Support",
+        correct: true
+      },
+      {
+        title: "Unlimited Free Subdomains",
+        correct: true
+      },
+      {
+        title: "Monthly Status Reports",
+        correct: true
+      }
+    ]
+  }
+  ];
 
   return (
     <div className="App">
-      <Nav cartCount={cart} />
-      <Head />
-      <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-          <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {data.map((ele) => <Content content={ele} cart={cart} setCart={setCart}/>)}
+      <section class="pricing py-5">
+        <div class="container">
+          <div class="row">
+            {data.map((ele) => {
+              return <Card card={ele} />
+            })}
+
           </div>
         </div>
       </section>
-      <Foot />
     </div>
   );
-};
-function Head() {
+}
+function Card({ card }) {
   return (
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Shop in style</h1>
-          <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+    <div class="col-lg-4">
+      <div class="card mb-5 mb-lg-0">
+        <div class="card-body">
+          <h5 class="card-title text-muted text-uppercase text-center">{card.plan}</h5>
+          <h6 class="card-price text-center">{card.price}<span class="period">/month</span></h6>
+          <hr />
+          <ul class="fa-ul">
+            {card.features.map((item) => {
+
+              return <li class={item.correct ? "" : "text-muted"}><span class="fa-li"><i class={item.correct ? "fas fa-check" : "fas fa-times"}></i></span>{item.highlight ? <strong>{item.title}</strong> : <span>{item.title}</span>}</li>
+            }
+            )}
+          </ul>
+          <div class="d-grid">
+            <a href="#" class="btn btn-primary text-uppercase">Button</a>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   )
 }
 
-function Foot() {
-  return (
-    <footer class="py-5 bg-dark">
-      <div class="container"><p class="m-0 text-center text-white">Copyright © Your Website 2022</p></div>
-    </footer>
-  )
-}
 export default App;
